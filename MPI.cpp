@@ -1,3 +1,4 @@
+Бодя Катрич, [3 трав. 2024 р., 08:58:13]:
 #include <iostream>
 #include <vector>
 #include <random>
@@ -96,11 +97,6 @@ void sort_using(std::function<std::vector<int>(const std::vector<int>&, int, int
     auto end_time = std::chrono::steady_clock::now();
 
     if (world_rank == 0) {
-        std::cout << "Sorted array (first 10 elements):" << std::endl;
-        for (int i = 0; i < 10; i++) {
-            std::cout << sorted_array[i] << " ";
-        }
-        std::cout << std::endl;
 
         std::cout << "Execution time: " << std::chrono::duration<double>(end_time - start_time).count() << " seconds" << std::endl;
     }
@@ -117,17 +113,11 @@ int main(int argc, char** argv) {
 
     if (world_rank == 0) {
         fill_random_vector(input_array, ARRAY_SIZE, 1, 10000);
-
-        std::cout << "Generated array (first 10 elements):" << std::endl;
-        for (int i = 0; i < 10; i++) {
-            std::cout << input_array[i] << " ";
-        }
-        std::cout << std::endl;
     }
 
     MPI_Bcast(input_array.data(), ARRAY_SIZE, MPI_INT, 0, MPI_COMM_WORLD);
 
-    if (world_rank == 0)
+if (world_rank == 0)
         std::cout << "Parallel version:" << std::endl;
     sort_using(parallel_sort, input_array, world_rank, world_size);
 
